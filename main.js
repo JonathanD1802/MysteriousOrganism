@@ -32,11 +32,21 @@ this function aims to compare the both dna properties of the two specimens.
 Each time a DNA base are equal and are at the same index, the function increase identicalDNABase by one. 
 Then it prints to the user the percentage both specimens have in common if the formula (IndenticalDNABase * 100)/dna.length. 
 
-The final methods willLikeliSurvive() computes the percentage of chance a specimen has to survive. 
+The methods willLikeliSurvive() computes the percentage of chance a specimen has to survive. 
 it iterate through the dna array and increase the survivePercentage from 1 each time a specimen dna is equal to "C" or "G". 
 Then, if the Math.round() methods it convert the survivePercentage into percentage. 
 Finally if the percentage is equal or above 60%, it returns true. 
 Otherwise, it returns false. 
+
+Finally, the complementStrand () method changes the DNA bases into the following order : 
+A => T
+T => A
+C => G
+G => C
+To accomplish that result, we use the map() methods on the current dna properties. We assign the new value to the newDNA variable. 
+Inside the map() method, we create an object (switchDNA)  with the key-value declared above. 
+Then , we return the value associated to the key element switchDNA[element]. 
+finally, we return the newDNA array variable assign to the dna property. 
 */
 let currentOrganismNumber = 1; 
 const PAequorFactory = (number = currentOrganismNumber,DNAbases = mockUpStrand() ) => {
@@ -45,7 +55,7 @@ const PAequorFactory = (number = currentOrganismNumber,DNAbases = mockUpStrand()
     specimenNum : number, 
     dna : DNAbases, 
     mutate(){
-      let indexRandomBase = Math.floor(Math.random()*(this.dna.length)); 
+      const indexRandomBase = Math.floor(Math.random()*(this.dna.length)); 
       let GenerateDNA = returnRandBase(); 
       while(this.dna[indexRandomBase] === GenerateDNA){ 
         GenerateDNA = returnRandBase(); 
@@ -75,11 +85,22 @@ const PAequorFactory = (number = currentOrganismNumber,DNAbases = mockUpStrand()
       }else{
         return false; 
       }; 
+    },
+    complementStrand(){
+      let newDNA = this.dna.map((element)=>{
+        const switchDNA = {
+          A: 'T', 
+          T: 'A', 
+          C: 'G', 
+          G: 'C'
+        };
+        return switchDNA[element]; 
+      })
+      return this.dna = newDNA
     }, 
   }; 
 }; 
   
-
 //Specimens array that will contains 30 specimens that have greater chance to survive. 
 let specimens = []; 
 
